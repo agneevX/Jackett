@@ -669,7 +669,8 @@ Jackett is available as a beta package from [SynoCommunity](https://synocommunit
 When running jackett behind a reverse proxy make sure that the original hostname of the request is passed to Jackett. If HTTPS is used also set the X-Forwarded-Proto header to "https". Don't forget to adjust the "Base path override" Jackett option accordingly.
 
 Example config for apache:
-```
+
+```apache
 <Location /jackett>
     ProxyPreserveHost On
     RequestHeader set X-Forwarded-Proto expr=%{REQUEST_SCHEME}
@@ -679,18 +680,20 @@ Example config for apache:
 ```
 
 Example config for Nginx:
-```
+
+```nginx
 location /jackett {
-	proxy_pass http://127.0.0.1:9117;
-	proxy_set_header X-Real-IP $remote_addr;
-	proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-	proxy_set_header X-Forwarded-Proto $scheme;
-	proxy_set_header X-Forwarded-Host $http_host;
-	proxy_redirect off;
+  proxy_pass http://127.0.0.1:9117;
+  proxy_set_header X-Real-IP $remote_addr;
+  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  proxy_set_header X-Forwarded-Proto $scheme;
+  proxy_set_header X-Forwarded-Host $http_host;
+  proxy_redirect off;
 }
 ```
 
 ## Search Cache
+
 Jackett has an internal cache to increase search speed and to reduce the number of requests to the torrent sites.
 The default values should be good for most users. If you have problems, you can reduce the TTL value in the
 configuration or even disable the cache. Keep in mind that you can be banned by the sites if you make a lot of requests.
@@ -698,6 +701,7 @@ configuration or even disable the cache. Keep in mind that you can be banned by 
 * **Cache max results per indexer**: (default 1000) How many results are kept in cache for each indexer. This limit is used to limit the use of RAM. If you make many requests and you have enough memory, increase this number.
 
 ## Configuring FlareSolverr
+
 Some indexers are protected by CloudFlare or similar services and Jackett is not able to solve the challenges.
 For these cases, [FlareSolverr](https://github.com/FlareSolverr/FlareSolverr) has been integrated into Jackett. This service is in charge of solving the challenges and configuring Jackett with the necessary cookies.
 Setting up this service is optional, most indexers don't need it.
@@ -705,12 +709,13 @@ Setting up this service is optional, most indexers don't need it.
 * Configure **FlareSolverr API URL** in Jackett. For example: http://172.17.0.2:8191
 
 ## Configuring OMDb
+
 This feature is used as a fallback (when using the aggregate Indexer) to get the movie/series title if only the IMDB ID is provided in the request.
 To use it, please just request a free API key on [OMDb](http://www.omdbapi.com/apikey.aspx) (1,000 daily requests limit) and paste the key in Jackett
 
 ## Command line switches
 
-  You can pass various options when running via the command line:
+You can pass various options when running via the command line:
 
 <details> <summary> Command Line Switches </summary>
 
@@ -766,8 +771,7 @@ To use it, please just request a free API key on [OMDb](http://www.omdbapi.com/a
 * In the drop-down menu of the run button select "Jackett.Server" instead of "IIS Express"
 * Build/Start the project
 
-### OSX
-
+### OS X
 
 ```bash
 # manually install osx dotnet via:
@@ -782,7 +786,6 @@ dotnet publish Jackett.Server -f net5.0 --self-contained -r osx-x64 -c Debug # t
 ```
 
 ### Linux
-
 
 ```bash
 sudo apt install nuget msbuild dotnet-sdk-5.0 # install build tools (Debian/ubuntu)
